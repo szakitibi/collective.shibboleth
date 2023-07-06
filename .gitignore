@@ -37,3 +37,7 @@ var/
 
 # OSX
 .DS_Store
+
+# temp: ignore python3 dependencies in src
+src/collective.pluggablelogin/
+src/Products.AutoUserMakerPASPlugin/

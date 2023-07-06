@@ -1,6 +1,6 @@
 import json
 import re
-from zope.interface import implements
+from zope.interface import implementer
 from zope.component import getMultiAdapter
 
 from plone.app.portlets.portlets import base
@@ -25,8 +25,10 @@ class ITALESTextLine(ITextLine):
     pass
 
 
+@implementer(ITALESTextLine)
 class TALESTextLine(schema.TextLine):
-    implements(ITALESTextLine)
+    """ A TALES field.
+    """
 
 
 class LongTextWidget(TextWidget):
@@ -196,13 +198,13 @@ class IShibbolethLoginPortlet(IPortletDataProvider):
     )
 
 
+@implementer(IShibbolethLoginPortlet)
 class Assignment(base.Assignment):
     """Portlet assignment.
 
     This is what is actually managed through the portlets UI and associated
     with columns.
     """
-    implements(IShibbolethLoginPortlet)
 
     header = _(u"Institutional Login")
     sp_handlerURL = u"string:${portal_url}/Shibboleth.sso"
@@ -255,7 +257,7 @@ def execute_expression(expr, folder, portal, context=None, **kwargs):
     ec = createExprContext(folder, portal, context)
     ec.contexts['context'] = ec.contexts['here']
     ec.vars['context'] = ec.vars['here']
-    for key, value in kwargs.iteritems():
+    for key, value in kwargs.items():
         ec.setLocal(key, value)
     return Expression(expr)(ec)
 
@@ -326,7 +328,7 @@ class Renderer(base.Renderer):
         # Ignore URL params by default for Plone Not Authorized redirects
         options = {'ignoreURLParams': True}
         for name, field in \
-            schema.getFields(IShibbolethLoginPortlet).iteritems():
+            schema.getFields(IShibbolethLoginPortlet).items():
             if name.startswith('eds_'):
                 value = getattr(self.data, name)
                 if value and ITALESTextLine.providedBy(field):
@@ -338,7 +340,7 @@ class Renderer(base.Renderer):
 
 # Customise field display length
 form_fields = form.Fields(IShibbolethLoginPortlet)
-for name, field in schema.getFields(IShibbolethLoginPortlet).iteritems():
+for name, field in schema.getFields(IShibbolethLoginPortlet).items():
     if ITextLine.providedBy(field):
         form_fields[name].custom_widget = LongTextWidget
 
@@ -353,6 +355,7 @@ class AddForm(base.AddForm):
     constructs the assignment that is being added.
     """
     form_fields = form_fields
+    schema = IShibbolethLoginPortlet
 
     def create(self, data):
         return Assignment(**data)

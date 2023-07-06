@@ -4,7 +4,8 @@ Changelog
 1.3.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Python 3, Plone 5.2 support
+  [szakitibi]
 
 
 1.3 (2018-12-05)
