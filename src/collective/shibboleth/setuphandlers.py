@@ -1,6 +1,6 @@
 from zope.component.hooks import getSite
 from Products.CMFCore.utils import getToolByName
-
+from plone import api
 
 def setupVarious(context, site=None):
     """
@@ -23,3 +23,21 @@ def setupVarious(context, site=None):
     # Manual install of AutoUserMakerPASPlugin
     qi = getToolByName(site, 'portal_quickinstaller')
     qi.installProduct('AutoUserMakerPASPlugin')
+
+
+def uninstall(context):
+    """Uninstall script"""
+    # Do something at the end of the uninstallation of this package.
+
+    # Remove the roles defined.
+    # Saidly there is no `rolemap.xml` removal for it
+    # also there is no ZMI page to remove it,
+    # thus we have to remove it manually here
+    # based on Products/GenericSetup/rolemap.py
+    roles_to_cleanup = [
+        "Shibboleth Authenticated",
+    ]
+    portal = api.portal.get()
+    ac_roles = getattr(portal, '__ac_roles__', [])
+    cleaned_up_roles = list(filter(lambda x: x not in roles_to_cleanup, ac_roles))
+    portal.__ac_roles__ = tuple(cleaned_up_roles)

@@ -35,6 +35,15 @@
         handler=".setuphandlers.setupVarious">
     </genericsetup:importStep>
 
+  <genericsetup:registerProfile
+      name="uninstall"
+      title="collective.shibboleth (uninstall)"
+      directory="profiles/uninstall"
+      description="Uninstalls the collective.shibboleth package"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      post_handler=".setuphandlers.uninstall"
+      />
+
 
   <!-- -*- extra stuff goes here -*- -->
 
