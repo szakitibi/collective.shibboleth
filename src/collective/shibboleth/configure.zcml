@@ -44,6 +44,10 @@
       post_handler=".setuphandlers.uninstall"
       />
 
+  <utility
+      factory=".setuphandlers.HiddenProfiles"
+      name="collective.shibboleth-hiddenprofiles"
+      />
 
   <!-- -*- extra stuff goes here -*- -->
 

@@ -1,6 +1,19 @@
 from zope.component.hooks import getSite
 from Products.CMFCore.utils import getToolByName
 from plone import api
+from Products.CMFPlone.interfaces import INonInstallable
+from zope.interface import implementer
+
+
+@implementer(INonInstallable)
+class HiddenProfiles(object):
+
+    def getNonInstallableProfiles(self):
+        """Hide uninstall profile from site-creation and quickinstaller."""
+        return [
+            'collective.shibboleth:uninstall',
+        ]
+
 
 def setupVarious(context, site=None):
     """
