@@ -4,5 +4,6 @@
   <description>Installs Shibboleth EDS authentication integration for a Plone portal.</description>
   <dependencies>
     <dependency>profile-collective.pluggablelogin:default</dependency>
+    <dependency>profile-Products.AutoUserMakerPASPlugin:default</dependency>
   </dependencies>
 </metadata>
